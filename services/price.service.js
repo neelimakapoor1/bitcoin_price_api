@@ -70,7 +70,7 @@ module.exports.getPriceHistory = (req, res) => {
  * @param [date]: Date for which price will be fetched
 **/
 fetchAndStorePrice = (date) => {
-    const path = '/v1/exchangerate/' + config.from_currency + '/' + config.to_currency;
+    const path = '/v1/exchangerate/' + config.to_currency + '/' + config.from_currency;
     const options = {
       host: config.coin_api.base_url,
       port: 443,
