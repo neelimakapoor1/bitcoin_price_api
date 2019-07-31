@@ -10,7 +10,7 @@ const months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "
 module.exports.init = () => {
   var immediateId = setImmediate(() => {
       retryLeft = config.coin_api.retries;
-      //fetchAndStorePrice(); //Temporary comment, so as to avoid quota limit
+      fetchAndStorePrice(); 
   });
 
   //Call fetchAndStoreCurrentPrice after specified interval
