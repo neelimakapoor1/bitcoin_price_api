@@ -42,7 +42,7 @@ module.exports.getPriceHistory = (req, res) => {
       { "$group": {   //group data depending on type. E.g.: If type is year, then only last data will be fetched for each month
           "_id": {
             hour: (req.params.type=='day')? { $hour: "$time" }: undefined,
-            day: (req.params.type=='month')?{ $dayOfMonth: "$time" }: undefined,
+            day: (req.params.type=='day' || req.params.type=='month')?{ $dayOfMonth: "$time" }: undefined,
             month: { $month: "$time" },
             year: { $year: "$time" },
           },
