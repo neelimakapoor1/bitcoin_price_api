@@ -8,7 +8,7 @@ module.exports = {
         retries: 0
     },
     port: 5000,
-    interval_in_sec: 2 * 60 * 60,
+    interval_in_sec: 60 * 60,
     to_currency: 'BTC',
     from_currency: 'EUR',
     to_currency_name: 'Bitcoins',
