@@ -56,7 +56,7 @@ module.exports.getPriceHistory = (req, res) => {
       }}
     ]).then(result => {
           console.log(`Received price-history ${JSON.stringify(result)}`);
-          res.send(formatResponse(req.params.type, result, req.params.fromCurrency, req.params.toCurrency));
+          res.send(formatResponse(req.params.type, result));
       }).catch(err => {
           console.log(`Received price-history-error ${err}`);
           res.status(500).send({
@@ -87,6 +87,7 @@ fetchAndStorePrice = (date) => {
       console.log(`Fetching current price from: ${options.host}${options.path}`)
       httpService.getJSON(options, savePriceInHistory,
         (error, statusCode) => {
+          //Check if we can retry on failure
           if (retryLeft > 0){
             fetchAndStoreCurrentPrice();
             retryLeft--;
@@ -110,6 +111,7 @@ fetchAndStorePrice = (date) => {
             console.log(`Price-history doesnt exist. Fetching price from: ${options.host}${options.path}`)
             httpService.getJSON(options, savePriceInHistory,
               (error, statusCode) => {
+                //Check if we can retry on failure
                 if (retryLeft > 0){
                   fetchAndStoreCurrentPrice();
                   retryLeft--;
@@ -157,7 +159,7 @@ savePriceInHistory = (data) => {
 /**
   format chart response
 **/
-formatResponse = (type, result, fromCurrency, toCurrency) => {
+formatResponse = (type, result) => {
     var categories = [];
     var data = [];
     for (var i = 0; i < result.length; i++) {
@@ -168,8 +170,8 @@ formatResponse = (type, result, fromCurrency, toCurrency) => {
         else if (type == 'month' && id.day%3 != 0){
           var today = new Date();
           var lastDay = new Date(today.getFullYear(), today.getMonth()+1, 0);
-          if (id.day != 1 && id.day != lastDay){
-            continue; //every 3d 
+          if (id.day != lastDay.getDate() && id.day != 1){ //dont ignore first and last day
+            continue; //every 3d  
           }
         }
         else if (type == 'all' && (id.month-1)%3 != 0){
@@ -183,8 +185,10 @@ formatResponse = (type, result, fromCurrency, toCurrency) => {
     return {
         categories: categories,
         data: data,
-        fromCurrency: fromCurrency,
-        toCurrency: toCurrency
+        fromCurrency: config.from_currency,
+        targetCurrency: config.to_currency,
+        fromCurrencyName: config.from_currency_name, //temp
+        targetCurrencyName: config.to_currency_name
     };
 }
 
@@ -288,9 +292,9 @@ loadPrevious = () => {
   //fetchAndStorePrice(new Date(currYear, 7, 1));
   
   //For all chart
-  fetchAndStorePrice(new Date(currYear-2, 1, 1));
-  fetchAndStorePrice(new Date(currYear-2, 4, 1));
-  fetchAndStorePrice(new Date(currYear-2, 7, 1));
-  fetchAndStorePrice(new Date(currYear-2, 10, 1));
+  fetchAndStorePrice(new Date(currYear-1, 1, 1));
+  fetchAndStorePrice(new Date(currYear-1, 4, 1));
+  fetchAndStorePrice(new Date(currYear-1, 7, 1));
+  fetchAndStorePrice(new Date(currYear-1, 10, 1));
 }
 
