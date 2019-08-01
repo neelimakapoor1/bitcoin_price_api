@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neelimakapoor1/cashbilli_api.git"
+    "url": "git+https://github.com/neelimakapoor1/bitcoin_price_api.git"
   },
   "keywords": [
     "api"
@@ -16,9 +16,9 @@
   "author": "neelimakapoor",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/neelimakapoor1/cashbilli_api/issues"
+    "url": "https://github.com/neelimakapoor1/bitcoin_price_api/issues"
   },
-  "homepage": "https://github.com/neelimakapoor1/cashbilli_api#readme",
+  "homepage": "https://github.com/neelimakapoor1/bitcoin_price_api#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",

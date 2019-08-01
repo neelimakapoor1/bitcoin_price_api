@@ -100,7 +100,7 @@ fetchAndStorePrice = (date) => {
       PriceHistory.find({ //Search options
             //from_curr: priceItem.from_curr, 
             //to_curr: priceItem.to_curr,
-            //hour: date.getHours(),
+            hour: (date.getHours() == 0)? undefined: date.getHours(),
             date: date.getDate(),
             month: date.getMonth(),
             year: date.getFullYear()
